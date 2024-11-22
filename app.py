@@ -27,12 +27,14 @@ class RequestHandler(BaseHTTPRequestHandler):
         # Extract the input text from the parsed data; default to an empty string if not found
         input_text = data.get("input", "")
 
+        print(f"Received input: {input_text}")
+
         # Tokenize the input text and prepare it as input for the model
         inputs = tokenizer(input_text, return_tensors="pt")
         # Generate a summary using the model with specific parameters
         outputs = model.generate(
             **inputs,
-            max_length=50,  # Maximum length of the generated summary
+            max_length=3000,  # Maximum length of the generated summary
             min_length=10,  # Minimum length of the generated summary
             length_penalty=2.0,  # Penalty for longer sequences to encourage brevity
             num_beams=4,  # Number of beams for beam search
